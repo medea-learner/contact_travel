@@ -1,0 +1,22 @@
+<odoo>
+  <record id="view_partner_form_inherit" model="ir.ui.view">
+    <field name="name">res.partner.form.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='category_id']/ancestor::group[1]" position="after">
+        <div class="oe_button_box" name="button_box">
+          <button
+            class="oe_stat_button"
+            type="action"
+            name="%(contact_travel.action_voyage)d"
+            icon="fa-plane"
+            string="Voyages"
+            context="{'search_default_partner_id': [id]}"
+            domain="[('partner_id', '=', id)]"
+          />
+        </div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

@@ -1,6 +1,15 @@
 from odoo import models, fields
 
 class Voyage(models.Model):
+    """
+    Represents a Voyage linked to a contact (res.partner).
+    Fields:
+    - name: Voyage name.
+    - departure_date: Date of departure.
+    - destination: Travel destination.
+    - partner_id: Linked contact.
+    - amount: Travel cost.
+    """
     _name = 'contact_travel.voyage'
     _description = 'Voyage'
 

@@ -1,6 +1,13 @@
 from odoo import models, fields, api
 
 class ResPartner(models.Model):
+    """
+    Inherits the res.partner model to add travel-related features:
+    - One2many relation with the 'contact_travel.voyage' model.
+    - Computed field 'voyage_count' for number of voyages.
+    - Computed 'reward_level' (Argent, Or, Platine) based on total voyage amount.
+    - Explanation field showing reward level logic.
+    """
     _inherit = 'res.partner'
 
     voyage_ids = fields.One2many(
@@ -31,11 +38,17 @@ class ResPartner(models.Model):
 
     @api.depends('voyage_ids')
     def _compute_voyage_count(self):
+        """
+        Computes the number of voyages associated with a partner.
+        """
         for partner in self:
             partner.voyage_count = len(partner.voyage_ids)
 
     @api.depends('voyage_ids.amount')
     def _compute_reward_level(self):
+        """
+        Computes the reward level based on the total amount of all voyages.
+        """
         for partner in self:
             total = sum(voyage.amount for voyage in partner.voyage_ids)
             if total >= 100000:
@@ -47,6 +60,9 @@ class ResPartner(models.Model):
     
     @api.depends('reward_level')
     def _compute_explanation(self):
+        """
+        Displays a textual explanation for the current reward level.
+        """
         for rec in self:
             if rec.reward_level == 'platine':
                 rec.explanation = "Platine (total ≥ 100 000€)"

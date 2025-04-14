@@ -11,10 +11,13 @@
             type="action"
             name="%(contact_travel.action_voyage)d"
             icon="fa-plane"
-            string="Voyages"
+            string="Voyages de l'Utilisateur (0)"
             context="{'search_default_partner_id': [id]}"
             domain="[('partner_id', '=', id)]"
-          />
+            invisible="voyage_count == 0"
+          >
+            <field name="voyage_count" widget="statinfo"/>
+          </button>
         </div>
       </xpath>
     </field>

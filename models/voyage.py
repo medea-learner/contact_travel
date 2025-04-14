@@ -12,3 +12,4 @@ class Voyage(models.Model):
         string='Contact',
         ondelete='cascade'
     )
+    amount = fields.Float(string='Montant du voyage')
